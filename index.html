@@ -7,18 +7,13 @@
   <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
+<h1>Wordle</h1>
+<div id="wordGrid"></div>
+<input type ="text" id="wordInput" maxLength="5" placeholder="Enter a 5-letter word">
+<button id="submitWord">Submit</button>
+<p id ="message"></p>
 
-<div class="header"><h1>WORDLE</h1></div>
-
-<div class="inputBox">
-  <input type="text" id="iWord" class="iWord" placeholder="Ex Orange" maxlength="5">
-  <button type="button" id="enterWord" class="enterWord">></button>
-</div>
-
-<div id="warnText"></div>
-<div id="wordMatrixTable" class="wordMatrixTable"></div>
-<div id="goverText"></div>
-
+<script src="./js/words.js"></script>
 <script src="./js/app.js"></script>
 
 </body>
