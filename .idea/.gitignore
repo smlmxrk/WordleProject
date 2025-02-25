@@ -6,13 +6,13 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
-# irrelevant js folders (?)
-/webpack.common.js/
-/webpack.config.dev.js/
-/webpack.config.prod.js/
-/package.json/
-/site.webmanifest/
-#license
-/LICENSE.txt/
-#node_modules
-/node_modules/
+# IDE & editors
+.idea/
+
+#dependencies
+node_modules/
+
+#irrelevant JS files
+webpack.common.js
+webpack.config.dev.js
+webpack.confiig.prod.js
