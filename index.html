@@ -4,17 +4,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Wordle</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap"
+    rel="stylesheet"
+  />
   <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-<h1>Wordle</h1>
-<div id="wordGrid"></div>
-<input type ="text" id="wordInput" maxLength="5" placeholder="Enter a 5-letter word">
-<button id="submitWord">Submit</button>
-<p id ="message"></p>
-
-<script src="./js/words.js"></script>
+<div class= "wrapper">
+<div class="container"></div>
+  <div class="rules">
+    <img src="./img/rules.svg" />
+  </div>
+<div class ="win-screen hide"> </div>
+</div>
+<button class ="submit hide">Submit</button>
 <script src="./js/app.js"></script>
-
 </body>
 </html>
