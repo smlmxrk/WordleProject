@@ -1,4 +1,4 @@
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -18,7 +18,7 @@ body {
   background-color: #ffffff;
   padding: 1em;
   border-radius: 0.5em;
-  box-shadow: 0  2.5em 3.75em rgba(30, 19, 70, 0.3);
+  box-shadow: 0 2.5em 3.75em rgba(30, 19, 70, 0.3);
 }
 .container,
 .rules {
@@ -27,7 +27,7 @@ body {
   position: relative;
 }
 .input-group {
-display: grid;
+  display: grid;
   width: 100%;
   grid-template-columns: auto auto auto auto auto;
   column-gap: 0.2em;
@@ -70,7 +70,7 @@ display: grid;
   top: 0;
   left: 0;
   border-radius: 0.5em;
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -89,10 +89,10 @@ display: grid;
   display: none;
 }
 @media screen and (max-width: 700px) {
-.wrapper {
-  flex-direction: column;
-  transform: translateX(-50%);
-  left: 50%;
-  top: 0.5em;
+  .wrapper {
+    flex-direction: column;
+    transform: translateX(-50%);
+    left: 50%;
+    top: 0.5em;
   }
 }
