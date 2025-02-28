@@ -4,7 +4,8 @@ Style the page as you go
 Reverse-engineer the game based on available resources
  */
 
-//temporary bank of words to pull from
+//temporary bank of words to pull from (later will be from an actual file)
+
 let words = [
   "Zebra",
   "Sling",
