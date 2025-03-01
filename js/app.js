@@ -1,10 +1,10 @@
 /* TODO:
--fix overall functionality (slow to respond, other bugs)
--fix invalid word not clearing that specific row
--fix win  screen
+-work on weird bugs ("no valid word found" when it's a valid word)
+-see if you can improve responsiveness
 -expand word list
 -switch themes (dark/light mode functionality)
 -dynamic resizing of window?
+-better win screen (confetti, "you won", etc.)
  */
 
 
@@ -73,7 +73,7 @@ function getRandom() {
 }
 
 function updateDivConfig(element, disabledStatus) {
-  if (element) {
+  if (document.activeElement !== element) {
     element.disabled = disabledStatus;
   }
   if (!disabledStatus) {
@@ -88,8 +88,8 @@ const checker = async (e) => {
   if (value.length === 1) {
     if (inputCount <= 4 && e.key !== "Backspace") {
       finalWord += value;
-      if (inputCount < 4) {
-        updateDivConfig(e.target.nextSibling, false);
+      if (inputCount < 4 && e.target.nextElementSibling) {
+        updateDivConfig(e.target.nextElementSibling, false);
       }
     }
     inputCount += 1;
@@ -100,8 +100,10 @@ const checker = async (e) => {
       return false;
     }
     updateDivConfig(e.target, true);
-    e.target.previousSibling.value = "";
-    updateDivConfig(e.target.previousSibling, false);
+    if (e.target.previousElementSibling) {
+      e.target.previousSibling.value = "";
+      updateDivConfig(e.target.previousSibling, false);
+    }
     inputCount = -1;
   }
 };
@@ -170,7 +172,7 @@ const validateWord = async () => {
       winScreen.classList.remove("hide");
       winScreen.innerHTML = `
         <span> Total guesses: ${tryCount}</span>
-        <button onclick="startGame()">New Game</button>
+        <button id = "newGameButton">New Game</button>
       `;
     }, 1000);
   } else {
@@ -189,6 +191,19 @@ const validateWord = async () => {
   }
   inputCount = 0;
 };
+/*
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("input-box")) {
+    updateDivConfig(e.target, false);
+  }
+});
+ */
+
+document.addEventListener("click", (e) => {
+  if (e.target.id === "newGameButton") {
+    startGame();
+  }
+});
 
 // Trigger the game on window load
 window.addEventListener('load', startGame);
