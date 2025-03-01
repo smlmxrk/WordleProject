@@ -1,6 +1,19 @@
+/* TODO:
+-fix overall functionality (slow to respond, other bugs)
+-fix invalid word not clearing that specific row
+-fix win  screen
+-expand word list
+-switch themes (dark/light mode functionality)
+-dynamic resizing of window?
+ */
+
+
 import { wordList } from "./words.js";
 
+console.log("JavaScript is loaded!");
+
 let container = document.querySelector(".container");
+console.log(container);
 let winScreen = document.querySelector(".win-screen");
 let submitButton = document.querySelector(".submit");
 let inputCount, tryCount, successCount, successLetters, inputRow, inputBox;
@@ -60,7 +73,9 @@ function getRandom() {
 }
 
 function updateDivConfig(element, disabledStatus) {
-  element.disabled = disabledStatus;
+  if (element) {
+    element.disabled = disabledStatus;
+  }
   if (!disabledStatus) {
     element.focus();
   }
