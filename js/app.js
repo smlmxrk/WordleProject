@@ -40,10 +40,10 @@ const startGame = async () => {
   finalWord = "";
 
   // create the input groups
-  for (let i = 0; i < 6; i++) {
+  for (let i = 0; i < 6; i++) { // rows
     let inputGroup = document.createElement("div");
     inputGroup.classList.add("input-group");
-    for (let j = 0; j < 5; j++) {
+    for (let j = 0; j < 5; j++) { // columns
       let inputBox = document.createElement("input");
       inputBox.type = "text";
       inputBox.classList.add("input-box");
@@ -171,6 +171,7 @@ const validateWord = async () => {
     setTimeout(() => {
       winScreen.classList.remove("hide");
       winScreen.innerHTML = `
+        <span style="font-size:250%"> You win! </span>
         <span> Total guesses: ${tryCount}</span>
         <button id = "newGameButton">New Game</button>
       `;
@@ -191,13 +192,6 @@ const validateWord = async () => {
   }
   inputCount = 0;
 };
-/*
-document.addEventListener("click", (e) => {
-  if (e.target.classList.contains("input-box")) {
-    updateDivConfig(e.target, false);
-  }
-});
- */
 
 document.addEventListener("click", (e) => {
   if (e.target.id === "newGameButton") {

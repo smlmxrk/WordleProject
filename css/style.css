@@ -6,7 +6,7 @@
 }
 body {
   height: 100vh;
-  background: linear-gradient(135deg, #c59cff, #7e5bfb);
+  background: linear-gradient(135deg, #5c5c5e, #1d1c1c);
 }
 .wrapper {
   position: absolute;
@@ -18,7 +18,7 @@ body {
   background-color: #ffffff;
   padding: 1em;
   border-radius: 0.5em;
-  box-shadow: 0 2.5em 3.75em rgba(30, 19, 70, 0.3);
+  box-shadow: 0 2.5em 3.75em rgba(255, 255, 255, 0.3);
 }
 .container,
 .rules {
@@ -78,7 +78,7 @@ body {
 }
 .win-screen button {
   font-size: 1.2em;
-  background-color: #7e5bfb;
+  background-color: #a9a8ae;
   border: none;
   outline: none;
   font-weight: 400;
