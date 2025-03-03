@@ -1,3 +1,4 @@
-Wordle-style game where the goal is to guess a predefined word
+Initially started as a simple wordle game, now I've decided to turn it into a game-selector type of app,
+where you're able to choose from different (relatively simple) games to play.
 
-Main motivation behind this project is simply trying to further my understanding of front-end development
+Just a simple project to get me more familiar with web development & actually building a website.
