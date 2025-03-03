@@ -1,32 +1,21 @@
 /* TODO:
--work on weird bugs ("no valid word found" when it's a valid word)
--see if you can improve responsiveness
 -expand word list
 -switch themes (dark/light mode functionality)
--dynamic resizing of window?
 -better win screen (confetti, "you won", etc.)
  */
-
 
 import { wordList } from "./words.js";
 
 console.log("JavaScript is loaded!");
 
 let container = document.querySelector(".container");
-console.log(container);
 let winScreen = document.querySelector(".win-screen");
 let submitButton = document.querySelector(".submit");
 let inputCount, tryCount, successCount, successLetters, inputRow, inputBox;
-let backSpaceCount = 0;
 let randomWord, finalWord;
 
 const isTouchDevice = () => {
-  try {
-    document.createEvent("TouchEvent");
-    return true;
-  } catch (e) {
-    return false;
-  }
+  return "ontouchstart" in document.documentElement;
 };
 
 // define the startGame function as async
@@ -73,54 +62,42 @@ function getRandom() {
 }
 
 function updateDivConfig(element, disabledStatus) {
-  if (document.activeElement !== element) {
+  if (element) {
     element.disabled = disabledStatus;
-  }
-  if (!disabledStatus) {
-    element.focus();
+    if (!disabledStatus) {
+      element.focus();
+    }
   }
 }
 
 // writing in input logic
 const checker = async (e) => {
   let value = e.target.value.toUpperCase();
-  updateDivConfig(e.target, true);
-  if (value.length === 1) {
-    if (inputCount <= 4 && e.key !== "Backspace") {
-      finalWord += value;
-      if (inputCount < 4 && e.target.nextElementSibling) {
-        updateDivConfig(e.target.nextElementSibling, false);
-      }
+  if (value && inputCount < 5) {
+    finalWord += value;
+    inputCount++;
+    if (inputCount < 5) {
+      updateDivConfig(e.target.nextElementSibling, false)
     }
-    inputCount += 1;
-  } else if (value.length === 0 && e.key === "Backspace") {
-    finalWord = finalWord.substring(0, finalWord.length - 1);
-    if (inputCount === 0) {
-      updateDivConfig(e.target, false);
-      return false;
+  } else if (!value) {
+    if (inputCount > 0) {
+      finalWord = finalWord.slice(0, -1);
+      inputCount--;
+      updateDivConfig(e.target.previousElementSibling, false);
     }
-    updateDivConfig(e.target, true);
-    if (e.target.previousElementSibling) {
-      e.target.previousSibling.value = "";
-      updateDivConfig(e.target.previousSibling, false);
-    }
-    inputCount = -1;
   }
 };
 
 // case where user presses backspace and all inputs are filled
 window.addEventListener("keyup", (e) => {
-  if (inputCount > 4) {
-    if (isTouchDevice()) {
-      submitButton.classList.remove("hide");
-    }
+  if (inputCount >= 5) {
     if (e.key === "Enter") {
       validateWord();
     } else if (e.key === "Backspace") {
       inputRow[tryCount].lastChild.value = "";
-      finalWord = finalWord.substring(0, finalWord.length - 1);
+      finalWord = finalWord.slice(0, -1);
       updateDivConfig(inputRow[tryCount].lastChild, false);
-      inputCount -= 1;
+      inputCount--;
     }
   }
 });
@@ -130,67 +107,50 @@ const validateWord = async () => {
   if (isTouchDevice()) {
     submitButton.classList.add("hide");
   }
-
-  let failed = false;
   let currentInputs = inputRow[tryCount].querySelectorAll(".input-box");
-
-  // check if it's a valid word
-  await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${finalWord}`)
-    .then((response) => {
-      if (response.status == "404") {
-        console.clear();
-        alert("Please Enter Valid Word");
-        failed = true;
-      }
-    });
-
-  if (failed) {
-    return false;
+  try {
+    let response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${finalWord}`);
+    if (!response.ok) {
+      alert("Please enter a valid word");
+      return;
+    }
+  } catch (error) {
+    console.error("API Error:", error);
+    return;
   }
 
   successCount = 0;  // reset success count
   successLetters = "";  // reset success letters for each validation
-
-  for (let i in randomWord) {
+  for (let i = 0; i < randomWord.length; i++) {
     if (finalWord[i] === randomWord[i]) {
       currentInputs[i].classList.add("correct");
-      successCount += 1;
-      successLetters += randomWord[i];
-    } else if (randomWord.includes(finalWord[i]) && !successLetters.includes(finalWord[i])) {
+      successCount++;
+    } else if (randomWord.includes(finalWord[i])) {
       currentInputs[i].classList.add("exists");
     } else {
       currentInputs[i].classList.add("incorrect");
     }
   }
 
-  // increment tryCount
-  tryCount += 1;
-
   // if all letters are correct
   if (successCount === 5) {
-    setTimeout(() => {
       winScreen.classList.remove("hide");
       winScreen.innerHTML = `
         <span style="font-size:250%"> You win! </span>
         <span> Total guesses: ${tryCount}</span>
         <button id = "newGameButton">New Game</button>
+      `; } else if (++tryCount === 6) {
+        winScreen.classList.remove("hide");
+    winScreen.innerHTML = `
+        <span style="font-size:250%"> You lose! </span>
+        <span style = "font size:150%"> The word was ${randomWord}. </span>
+        <button id = "newGameButton">New Game</button>
       `;
-    }, 1000);
-  } else {
+    } else {
     inputCount = 0;
     finalWord = "";
-
-    if (tryCount === 6) {
-      tryCount = 0;
-      winScreen.classList.remove("hide");
-      winScreen.innerHTML = ` <span>You lose!</>
-         <button onclick="startGame()">New Game</button>`;
-      return false;
-    }
-
     updateDivConfig(inputRow[tryCount].firstChild, false);
   }
-  inputCount = 0;
 };
 
 document.addEventListener("click", (e) => {
