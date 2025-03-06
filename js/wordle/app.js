@@ -139,12 +139,14 @@ const validateWord = async () => {
         <span style="font-size:250%"> You win! </span>
         <span> Total guesses: ${tryCount}</span>
         <button id = "newGameButton">New Game</button>
+        <button id = "backToSelection">Back to Games</button>
       `; } else if (++tryCount === 6) {
         winScreen.classList.remove("hide");
     winScreen.innerHTML = `
         <span style="font-size:250%"> You lose! </span>
         <span style = "font size:150%"> The word was ${randomWord}. </span>
         <button id = "newGameButton">New Game</button>
+        <button id = "backToSelection">Back to Games</button>
       `;
     } else {
     inputCount = 0;
@@ -156,6 +158,8 @@ const validateWord = async () => {
 document.addEventListener("click", (e) => {
   if (e.target.id === "newGameButton") {
     startGame();
+  } else if (e.target.id === "backToSelection") {
+    window.location.href = "../index.html";
   }
 });
 

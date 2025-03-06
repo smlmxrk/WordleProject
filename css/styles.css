@@ -6,7 +6,7 @@
 }
 
 .wrapper {
-  transform: scale(1.1);
+  transform: scale(1.2);
   display: flex;
   flex-direction: column;
   align-items: center;
