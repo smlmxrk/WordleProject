@@ -67,16 +67,20 @@
   background: #545c68;
   object-fit: contain;
   backface-visibility: hidden;
-  transform: scale(1.3);
+  transform: scale(1);
 }
 
 
 .memory-card.flip .front-face {
-  transform: scale(1.3) rotateY(180deg);
+  transform: scale(1) rotateY(180deg);
 }
 
 .memory-card.flip .back-face {
-  transform: scale(1.3) rotateY(180deg);
+  transform: scale(1) rotateY(180deg);
+}
+
+.matched {
+  pointer-events: none;
 }
 
 body {
