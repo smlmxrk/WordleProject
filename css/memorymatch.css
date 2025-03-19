@@ -16,8 +16,70 @@
   color: white;
 }
 
-html, body {
+.memory-game {
+  width: 640px;
+  height: 640px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  perspective: 1000px;
+}
+
+.memory-card {
+  width: calc(25% - 10px);
+  height: calc(33.333% - 10px);
+  margin: 5px;
+  position: relative;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, .3);
+  border-radius: 5px;
+  overflow: hidden;
+  transform: rotateY(0deg);
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+}
+
+.memory-card.flip {
+  transform: rotateY(180deg);
+}
+
+.memory-card:active {
+  transform: scale(0.97);
+  transition: transform 0.3s;
+}
+
+/* Front face */
+.front-face {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 5px;
+  background: #545c68;
+  object-fit: contain;
+  transform: scale(1.3)
+}
+
+/* Back face */
+.back-face {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 5px;
+  background: #545c68;
+  object-fit: contain;
+  backface-visibility: hidden;
+  transform: scale(1.3);
+}
+
+
+.memory-card.flip .front-face {
+  transform: scale(1.3) rotateY(180deg);
+}
+
+.memory-card.flip .back-face {
+  transform: scale(1.3) rotateY(180deg);
+}
+
+body {
   overflow-x: hidden;
   overflow-y: hidden;
-  width: 100%;
 }
