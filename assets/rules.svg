@@ -71,9 +71,9 @@
 
   <text class="cls-1" transform="translate(9.19 28.02)">How To Play</text>
   <text class="cls-2" transform="translate(10.19 54.66)">Guess The Wordle In 6 Tries</text>
-  <text class="cls-3" transform="translate(9.57 80.32)">- <tspan class="cls-4" x="14.72" y="0">Each guess must be a valid 5-letter word.</tspan></text>
+  <text class="cls-3" transform="translate(9.57 80.32)"><tspan class="cls-4" x="0" y="0">Each guess must be a valid 5-letter word.</tspan></text>
   <text class="cls-5" transform="translate(10.28 150.92)">Examples</text>
-  <text class="cls-6" transform="translate(10.06 102.57)">- The Color of the tiles will change to show how <tspan x="0" y="18" xml:space="preserve"> close your guess was to the word.</tspan></text>
+  <text class="cls-6" transform="translate(10.06 102.57)"><tspan class="cls-4" x="0" y="0">The Color of the tiles will change to show how</tspan> <tspan x="0" y="18" xml:space="preserve">close your guess was to the word.</tspan></text>
   <rect class="cls-7" x="10" y="167" width="32.86" height="32.86" />
   <rect class="cls-8" x="48.17" y="167.48" width="32.86" height="32.86" />
   <rect class="cls-8" x="86.83" y="167.48" width="32.86" height="32.86" />
