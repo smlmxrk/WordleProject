@@ -2,16 +2,6 @@
 #ide-files
 .idea
 
-#irrelevant js files
-webpack.common.js
-webpack.config.prod.js
-webpack.config.dev.js
-package-lock.json
-package.json
-
-#dependencies
-node_modules
-
 #others
 dist
 .cache

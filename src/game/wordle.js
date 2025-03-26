@@ -159,7 +159,7 @@ document.addEventListener("click", (e) => {
   if (e.target.id === "newGameButton") {
     startGame();
   } else if (e.target.id === "backToSelection") {
-    window.location.href = "../index.html";
+    window.location.href = "../../public/index.html";
   }
 });
 
