@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const cards = document.querySelectorAll(".memory-card");
   cards.forEach(card => card.addEventListener("click", flipCard));
+
   (function shuffle() {
     console.log("Shuffled");
     document.querySelectorAll(".memory-card").forEach(card => {
@@ -50,6 +51,7 @@ function disableCards() {
 
   if (matchCount === totalPairs) {
     setTimeout(() => {
+      console.log("go win");
       alert("You win!"); // placeholder win-screen
     }, 500);
   }
