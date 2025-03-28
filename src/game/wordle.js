@@ -4,7 +4,7 @@
 -better win screen (confetti, "you won", etc.)
  */
 
-import { wordList } from "./words.js";
+import { wordList } from "../utils/words.js";
 
 console.log("JavaScript is loaded!");
 
