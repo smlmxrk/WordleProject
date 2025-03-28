@@ -1,15 +1,14 @@
-import path from "path";
-import { fileURLToPath } from "url";
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-export default {
-  entry: "./src/index.jsx",
+module.exports = {
+  entry: './src/index.jsx', // Updated to match .jsx entry point
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
-    clean: true,
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+  },
+  resolve: {
+    extensions: ['.js', '.jsx', '.json'], // Ensures .jsx files can be resolved
   },
   module: {
     rules: [
@@ -17,23 +16,28 @@ export default {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"],
-          },
-        },
+            presets: ['@babel/preset-env', '@babel/preset-react']
+          }
+        }
       },
       {
-        test: /\.css$/,  // ✅ Enables CSS imports in React components
-        use: ["style-loader", "css-loader"],
-      },
-      {
-        test: /\.(png|jpe?g|gif|svg)$/i,  // ✅ Handles images
-        type: "asset/resource",
-      },
-    ],
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      }
+    ]
   },
-  resolve: {
-    extensions: [".js", ".jsx"],
-  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './public/index.html'
+    })
+  ],
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'dist')
+    },
+    compress: true,
+    port: 3000
+  }
 };

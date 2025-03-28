@@ -1,29 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Game Selection</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="src/styles/styles.css" />
 </head>
 <body>
-<div id="root"></div>
-<script src="./js/bundle.js"></script>
-<div class="wrapper">
-  <h1>Choose Your Game</h1>
-  <div class="game-container">
-    <div class="game-card" onclick="window.location.href='../games/wordle.html'">
-      <h2>Wordle</h2>
-      <p>Guess the 5-letter word in 6 tries!</p>
-    </div>
-    <div class="game-card">
-      <!--
-      <div class="game-card" onclick="window.location.href='games/memory_match.html'">
-      -->
-      <h2>Memory Match</h2>
-      <p>Coming soon!</p>
-    </div>
-  </div>
-</div>
+<div id="root"></div> <!-- React will mount here -->
+<script src="../dist/bundle.js"></script>
 </body>
 </html>
