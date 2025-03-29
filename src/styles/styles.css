@@ -12,6 +12,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  min-width: 100%;
   background: linear-gradient(135deg, #5c5c5e, #1d1c1c);
   color: white;
 }
@@ -54,6 +55,7 @@ h1 {
 .game-card:hover {
   transform: scale(1.05);
 }
+
 
 html, body {
   overflow-x: hidden;

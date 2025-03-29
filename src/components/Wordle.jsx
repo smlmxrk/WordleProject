@@ -1,12 +1,12 @@
-// TODO: fix page rendering for wordle
-// TODO: continue refactor (wordle --> memory match)
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 
-
-import React, { useState, useEffect, useCallback } from 'react';
 import { wordList } from 'utils/words.js';
+// Import if using React Router
+// import { useNavigate } from 'react-router-dom';
+import 'styles/wordle.css'; // Ensure you have a corresponding CSS file
 
 const WordleGame = () => {
-  const [container, setContainer] = useState([]);
+  // const navigate = useNavigate(); // Uncomment if using React Router
   const [winScreen, setWinScreen] = useState({
     show: false,
     message: '',
@@ -28,29 +28,60 @@ const WordleGame = () => {
     Array(6).fill().map(() => Array(5).fill(''))
   );
 
-  // fetch random word
+  // Create refs for input elements
+  const inputRefs = useRef(Array(6).fill().map(() => Array(5).fill(null)));
+
+  // Get random word
   const getRandom = useCallback(() => {
     return wordList[Math.floor(Math.random() * wordList.length)].toUpperCase();
   }, []);
 
-  // start game function
+  // Debug random word
+  useEffect(() => {
+    console.log("Random word:", gameState.randomWord);
+  }, [gameState.randomWord]);
+
+  // Focus the first input of the active row
+  const focusActiveInput = useCallback(() => {
+    const { tryCount, inputCount } = gameState;
+    if (inputRefs.current[tryCount] && inputRefs.current[tryCount][inputCount]) {
+      setTimeout(() => {
+        inputRefs.current[tryCount][inputCount].focus();
+      }, 0);
+    }
+  }, [gameState]);
+
+  // Start game function
   const startGame = useCallback(() => {
     setWinScreen({ show: false, message: '', totalGuesses: 0, isWin: false });
+    const newRandomWord = getRandom();
     setGameState({
       inputCount: 0,
       successCount: 0,
       successLetters: '',
       tryCount: 0,
       finalWord: '',
-      randomWord: getRandom()
+      randomWord: newRandomWord
     });
     setInputRows(Array(6).fill().map(() => Array(5).fill('')));
     setInputStatuses(Array(6).fill().map(() => Array(5).fill('')));
+
+    // Focus first input after state update
+    setTimeout(() => {
+      if (inputRefs.current[0] && inputRefs.current[0][0]) {
+        inputRefs.current[0][0].focus();
+      }
+    }, 0);
   }, [getRandom]);
 
-  // validate word
+  // Validate word
   const validateWord = useCallback(async () => {
     const { randomWord, tryCount, finalWord } = gameState;
+
+    if (finalWord.length !== 5) {
+      alert("Please enter a 5-letter word");
+      return;
+    }
 
     try {
       const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${finalWord}`);
@@ -100,68 +131,132 @@ const WordleGame = () => {
         finalWord: '',
         tryCount: prev.tryCount + 1
       }));
+
+      // Focus first input of next row
+      setTimeout(() => {
+        if (inputRefs.current[tryCount + 1] && inputRefs.current[tryCount + 1][0]) {
+          inputRefs.current[tryCount + 1][0].focus();
+        }
+      }, 0);
     }
   }, [gameState, inputStatuses]);
 
-  // handle input change
+  // Handle input change
   const handleInputChange = useCallback((rowIndex, colIndex, value) => {
+    const { tryCount } = gameState;
+
+    // Ignore inputs for inactive rows
+    if (rowIndex !== tryCount) return;
+
     const newInputRows = [...inputRows];
-    newInputRows[rowIndex][colIndex] = value.toUpperCase();
+    const newValue = value.toUpperCase();
+    newInputRows[rowIndex][colIndex] = newValue;
     setInputRows(newInputRows);
 
+    // Build the final word from the current row
     const newFinalWord = newInputRows[rowIndex].join('');
     setGameState(prev => ({
       ...prev,
       inputCount: newFinalWord.length,
       finalWord: newFinalWord
     }));
-  }, [inputRows]);
 
-  const handleKeyPress = useCallback((e) => {
-    const { inputCount, tryCount } = gameState;
+    // Auto-advance to next input if value is entered
+    if (newValue && colIndex < 4) {
+      setTimeout(() => {
+        if (inputRefs.current[rowIndex][colIndex + 1]) {
+          inputRefs.current[rowIndex][colIndex + 1].focus();
+        }
+      }, 0);
+    }
+  }, [gameState, inputRows]);
 
-    if (inputCount === 5) {
-      if (e.key === 'Enter') {
-        validateWord();
-      } else if (e.key === 'Backspace') {
+  // Handle keyboard input for navigation and submission
+  const handleKeyDown = useCallback((e, rowIndex, colIndex) => {
+    const { tryCount, inputCount } = gameState;
+
+    // Ignore keyboard events for inactive rows
+    if (rowIndex !== tryCount) return;
+
+    if (e.key === 'Enter' && inputCount === 5) {
+      validateWord();
+      e.preventDefault();
+    } else if (e.key === 'Backspace' && !inputRows[rowIndex][colIndex]) {
+      // Move to previous input on backspace if current input is empty
+      if (colIndex > 0) {
         const newInputRows = [...inputRows];
-        newInputRows[tryCount][inputCount - 1] = '';
+        newInputRows[rowIndex][colIndex - 1] = '';
         setInputRows(newInputRows);
         setGameState(prev => ({
           ...prev,
-          inputCount: inputCount - 1,
+          inputCount: prev.inputCount - 1,
           finalWord: prev.finalWord.slice(0, -1)
         }));
+        setTimeout(() => {
+          if (inputRefs.current[rowIndex][colIndex - 1]) {
+            inputRefs.current[rowIndex][colIndex - 1].focus();
+          }
+        }, 0);
       }
+      e.preventDefault();
+    } else if (e.key === 'ArrowLeft' && colIndex > 0) {
+      inputRefs.current[rowIndex][colIndex - 1].focus();
+      e.preventDefault();
+    } else if (e.key === 'ArrowRight' && colIndex < 4) {
+      inputRefs.current[rowIndex][colIndex + 1].focus();
+      e.preventDefault();
     }
   }, [gameState, inputRows, validateWord]);
 
+  // Global keyboard event listener
+  useEffect(() => {
+    const handleGlobalKeyPress = (e) => {
+      const { tryCount, inputCount } = gameState;
 
+      if (e.key === 'Enter' && inputCount === 5) {
+        validateWord();
+      }
+    };
+
+    window.addEventListener('keyup', handleGlobalKeyPress);
+    return () => {
+      window.removeEventListener('keyup', handleGlobalKeyPress);
+    };
+  }, [gameState, validateWord]);
+
+  // Initialize game on mount
   useEffect(() => {
     startGame();
-    window.addEventListener('keyup', handleKeyPress);
-    return () => {
-      window.removeEventListener('keyup', handleKeyPress);
-    };
-  }, [startGame, handleKeyPress]);
+  }, [startGame]);
 
-  // render input rows
+  // Render input rows
   const renderInputRows = () => {
     return inputRows.map((row, rowIndex) => (
       <div key={rowIndex} className="input-group">
         {row.map((value, colIndex) => (
           <input
             key={colIndex}
+            ref={el => inputRefs.current[rowIndex][colIndex] = el}
             type="text"
             maxLength={1}
             value={value}
             disabled={rowIndex !== gameState.tryCount}
             className={`input-box ${inputStatuses[rowIndex][colIndex]}`}
-            onChange={(e) => handleInputChange(rowIndex, colIndex, e.target.value)}
+            onChange={e => handleInputChange(rowIndex, colIndex, e.target.value)}
+            onKeyDown={e => handleKeyDown(e, rowIndex, colIndex)}
           />
         ))}
       </div>
     ));
+  };
+
+  // Return to game selection handler
+  const handleBackToGames = () => {
+    // Using React Router (preferred):
+    // navigate('/');
+
+    // Using direct navigation (fallback):
+    window.location.href = '/';
   };
 
   return (
@@ -170,7 +265,8 @@ const WordleGame = () => {
         {renderInputRows()}
       </div>
       <div className="rules">
-        <object type="image/svg+xml" data="../src/assets/rules.svg"></object>
+        {/* Updated path to rules SVG */}
+        <img src="assets/rules.svg" alt="Game Rules"/>
       </div>
       {winScreen.show && (
         <div className="win-screen">
@@ -179,7 +275,7 @@ const WordleGame = () => {
             <span>Total guesses: {winScreen.totalGuesses}</span>
           )}
           <button onClick={startGame}>New Game</button>
-          <button onClick={() => window.location.href = '../../public/index.html'}>
+          <button onClick={handleBackToGames}>
             Back to Games
           </button>
         </div>

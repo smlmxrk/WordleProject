@@ -9,7 +9,7 @@ module.exports = merge(common, {
     liveReload: true,
     hot: true,
     open: true,
-    static: path.resolve(__dirname, 'dist'),
+    static: path.resolve(__dirname, 'public'),
     historyApiFallback: true,
   },
 });

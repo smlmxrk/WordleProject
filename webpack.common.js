@@ -6,6 +6,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
+    clean: true,
   },
   resolve: {
     extensions: ['.js', '.jsx', '.json'], // Ensures .jsx files can be resolved
