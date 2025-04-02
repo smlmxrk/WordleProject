@@ -14,7 +14,6 @@ export const wordList = [
     "shred",
     "cheek",
     "shock",
-    "czech",
     "woman",
     "wreck",
     "court",
