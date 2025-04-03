@@ -2,6 +2,9 @@ import React from "react";
 import "./styles/styles.css";
 import Wordle from "./components/Wordle";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import MemoryMatch from "./components/Memory-Match";
+
+// TODO: add header/buttons to github, etc
 
 const App = () => {
   return (
@@ -16,10 +19,10 @@ const App = () => {
           </Link>
 
           {/* Memory Match (Coming Soon) */}
-          <div className="game-card">
+          <Link to="/memorymatch" className="game-card">
             <h2>Memory Match</h2>
-            <p>Coming soon!</p>
-          </div>
+            <p>Test your memory and match cards together!</p>
+          </Link>
         </div>
 
         {/* game routes */}
@@ -29,8 +32,8 @@ const App = () => {
 
           {/* Wordle game route */}
           <Route path="/wordle" element={<Wordle />} />
-
           {/* memory match route goes here */}
+          <Route path="/memorymatch" element={<MemoryMatch />} />
         </Routes>
       </div>
     </Router>

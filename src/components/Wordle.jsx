@@ -228,28 +228,32 @@ const WordleGame = () => {
   return (
     <div className="wrapper">
       {/* help button */}
+      {!winScreen.show && (
       <button className="help-button" onClick={() => setShowHelp(true)}>
         Need Help?
       </button>
-
-      {/* help button */}
-
+      )}
+      {!winScreen.show && (
+      <button className="back-button" onClick={handleBackToGames}>
+        Back to Games
+      </button>
+       )}
       {showHelp && (
         <div className="modal-overlay" onClick={() => setShowHelp(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <RulesSVG className="rules-image" />
+            <RulesSVG className="rules-image"/>
             <button className="close-button" onClick={() => setShowHelp(false)}>
               Close
             </button>
           </div>
         </div>
-        )}
+      )}
       <div className="container">
         {renderInputRows()}
       </div>
       {winScreen.show && (
         <div className="win-screen">
-          <span style={{ fontSize: '250%' }}>{winScreen.message}</span>
+          <span style={{fontSize: '250%'}}>{winScreen.message}</span>
           {winScreen.totalGuesses && (
             <span>Total guesses: {winScreen.totalGuesses}</span>
           )}

@@ -23,6 +23,10 @@ h1,h2 {
   user-select: none;
 }
 
+h2 {
+  margin-bottom: 0;
+}
+
 .game-container {
   display: flex;
   gap: 1.5em;

@@ -38,6 +38,10 @@ module.exports = {
         use: ['@svgr/webpack', 'file-loader']
       },
       {
+        test: /\.(png|jpe?g|gif)$/,
+        type: 'asset/resource',
+      },
+      {
         test: /\.m?js$/,
         exclude: /node_modules/,
         use: {
