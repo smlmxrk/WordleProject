@@ -103,3 +103,26 @@ h1 {
 .win-screen button:hover {
   background: lightgray;
 }
+
+.memory-match-back-button {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.3);
+  top: 65%;
+  right: 534px;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: -5px;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  transform: scale(80%);
+}
+
+.memory-match-back-button:hover {
+  background-color: rgba(220, 215, 215, 0.8);
+  transform: scale(1);
+}

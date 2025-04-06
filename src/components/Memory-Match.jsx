@@ -9,7 +9,7 @@ import rustLogo from "assets/rust_logo.png";
 import reactLogo from "assets/react_logo.png";
 
 // TODO: fix JS logo facing wrong way (CSS)
-// TODO: add return to games button
+// TODO: eventually fix weird scaling issues on different resolutions
 
 const cardImages = [
   { id: 1, src: reactLogo, framework: "react"},
@@ -79,6 +79,9 @@ const MemoryMatch = () => {
   return (
     <div className="wrapper">
       <h1>Memory Match</h1>
+      <button className="memory-match-back-button" onClick={handleBackToGames}>
+        Back to Games
+      </button>
       <section className="memory-game">
         {cards.map(card => (
           <div
@@ -86,7 +89,7 @@ const MemoryMatch = () => {
             className={`memory-card ${card.flipped ? "flip" : ""} ${card.matched ? "matched" : ""}`}
             onClick={() => handleCardClick(card)}
           >
-            <img className="front-face" src={card.flipped || card.matched ? card.src : jsLogo} alt={card.framework} />
+            <img className="front-face" src={card.flipped || card.matched ? card.src : jsLogo} alt={card.framework}/>
           </div>
         ))}
       </section>
