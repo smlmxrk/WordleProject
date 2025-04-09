@@ -78,10 +78,11 @@ const MemoryMatch = () => {
 
   return (
     <div className="wrapper">
-      <h1>Memory Match</h1>
+      {matchedPairs !== cardImages.length && (
       <button className="memory-match-back-button" onClick={handleBackToGames}>
         Back to Games
       </button>
+      )}
       <section className="memory-game">
         {cards.map(card => (
           <div
