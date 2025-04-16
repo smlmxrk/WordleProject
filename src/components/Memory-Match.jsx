@@ -83,22 +83,37 @@ const MemoryMatch = () => {
 
   return (
     <div className="wrapper">
-      {matchedPairs !== cardImages.length && (
-      <button className="memory-match-back-button" onClick={handleBackToGames}>
-        Back to Games
-      </button>
-      )}
-      <section className="memory-game">
-        {cards.map(card => (
-          <div
-            key={card.id}
-            className={`memory-card ${card.flipped ? "flip" : ""} ${card.matched ? "matched" : ""}`}
-            onClick={() => handleCardClick(card)}
+      <div className="memory-layout">
+        <section className="memory-game">
+          {cards.map(card => (
+            <div
+              key={card.id}
+              className={`
+              memory-card
+              ${card.flipped ? "flip" : ""}
+              ${card.matched ? "matched" : ""}
+            `}
+              onClick={() => handleCardClick(card)}
+            >
+              <img
+                className="front-face"
+                src={card.flipped || card.matched ? card.src : jsLogo}
+                alt={card.framework}
+              />
+            </div>
+          ))}
+        </section>
+
+        {matchedPairs !== cardImages.length && (
+          <button
+            className="memory-match-back-button"
+            onClick={handleBackToGames}
           >
-            <img className="front-face" src={card.flipped || card.matched ? card.src : jsLogo} alt={card.framework}/>
-          </div>
-        ))}
-      </section>
+            Back to Games
+          </button>
+        )}
+      </div>
+
       {matchedPairs === cardImages.length && (
         <div className="win-screen">
           <h2>You Win!</h2>
@@ -108,6 +123,7 @@ const MemoryMatch = () => {
       )}
     </div>
   );
+
 };
 
 export default MemoryMatch;
