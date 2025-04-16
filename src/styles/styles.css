@@ -60,6 +60,28 @@ h2 {
   transform: scale(1.05);
 }
 
+.github-button {
+  display: inline-flex;
+  align-items: center;
+  background-color: #1e1f22;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.github-button:hover {
+  background-color: #36393e;
+}
+
+.github-icon {
+  width: 30px;
+  height: 30px;
+  margin-right: 8px;
+}
+
 
 html, body {
   overflow-x: hidden;

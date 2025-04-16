@@ -32,8 +32,11 @@ const MemoryMatch = () => {
   const [flippedCards, setFlippedCards] = useState([]);
   const [matchedPairs, setMatchedPairs] = useState(0);
 
+  const [disableBoard, setDisableBoard] = useState(false);
+
   useEffect(() => {
     if (flippedCards.length === 2) {
+      setDisableBoard(true);
       const [first, second] = flippedCards;
       if (first.framework === second.framework) {
         setCards(prev =>
@@ -42,6 +45,7 @@ const MemoryMatch = () => {
           )
         );
         setMatchedPairs(prev => prev + 1);
+        setDisableBoard(false);
       } else {
         setTimeout(() => {
           setCards(prev =>
@@ -49,6 +53,7 @@ const MemoryMatch = () => {
               card.id === first.id || card.id === second.id ? {...card, flipped: false} : card
             )
           );
+          setDisableBoard(false);
         }, 1000);
       }
       setFlippedCards([]);
@@ -56,7 +61,7 @@ const MemoryMatch = () => {
 }, [flippedCards]);
 
   const handleCardClick = (card) => {
-    if (card.flipped || card.matched || flippedCards.length === 2) return;
+    if (disableBoard || card.flipped || card.matched || flippedCards.length === 2) return;
 
     const updatedCards = cards.map(c =>
       c.id === card.id ? { ...c, flipped: true } : c
