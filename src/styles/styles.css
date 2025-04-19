@@ -74,6 +74,7 @@ h2 {
 
 .github-button:hover {
   background-color: #36393e;
+  transform: scale(1.05);
 }
 
 .github-icon {

@@ -39,7 +39,7 @@ const WordleGame = () => {
   }, [gameState.randomWord]);
 
   const startGame = useCallback(() => {
-    setWinScreen({ show: false, message: '', totalGuesses: 0, isWin: false });
+    setWinScreen({show: false, message: '', totalGuesses: 0, isWin: false});
     const newRandomWord = getRandom();
     setGameState({
       inputCount: 0,
@@ -61,7 +61,7 @@ const WordleGame = () => {
 
   // validation logic
   const validateWord = useCallback(async () => {
-    const { randomWord, tryCount, finalWord } = gameState;
+    const {randomWord, tryCount, finalWord} = gameState;
 
     if (finalWord.length !== 5) {
       alert("Please enter a 5-letter word");
@@ -121,7 +121,7 @@ const WordleGame = () => {
   }, [gameState, inputStatuses]);
 
   const handleInputChange = useCallback((rowIndex, colIndex, value) => {
-    const { tryCount } = gameState;
+    const {tryCount} = gameState;
 
     if (rowIndex !== tryCount) return;
 
@@ -147,7 +147,7 @@ const WordleGame = () => {
   }, [gameState, inputRows]);
 
   const handleKeyDown = useCallback((e, rowIndex, colIndex) => {
-    const { tryCount, inputCount } = gameState;
+    const {tryCount, inputCount} = gameState;
 
     if (rowIndex !== tryCount) return;
 
@@ -227,33 +227,52 @@ const WordleGame = () => {
 
   return (
     <div className="wrapper">
-      {/* help button */}
       {!winScreen.show && (
-      <button className="help-button" onClick={() => setShowHelp(true)}>
-        Need Help?
-      </button>
+        <div className="header-buttons">
+          <button
+            className="help-button"
+            onClick={() => setShowHelp(true)}
+          >
+            Need Help?
+          </button>
+          <button
+            className="back-button"
+            onClick={handleBackToGames}
+          >
+            Back to Games
+          </button>
+        </div>
       )}
-      {!winScreen.show && (
-      <button className="back-button" onClick={handleBackToGames}>
-        Back to Games
-      </button>
-       )}
+
       {showHelp && (
-        <div className="modal-overlay" onClick={() => setShowHelp(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="modal-overlay"
+          onClick={() => setShowHelp(false)}
+        >
+          <div
+            className="modal-content"
+            onClick={e => e.stopPropagation()}
+          >
             <RulesSVG className="rules-image"/>
-            <button className="close-button" onClick={() => setShowHelp(false)}>
+            <button
+              className="close-button"
+              onClick={() => setShowHelp(false)}
+            >
               Close
             </button>
           </div>
         </div>
       )}
+
       <div className="container">
         {renderInputRows()}
       </div>
+
       {winScreen.show && (
         <div className="win-screen">
-          <span style={{fontSize: '250%'}}>{winScreen.message}</span>
+        <span style={{fontSize: '250%'}}>
+          {winScreen.message}
+        </span>
           {winScreen.totalGuesses && (
             <span>Total guesses: {winScreen.totalGuesses}</span>
           )}
@@ -266,5 +285,4 @@ const WordleGame = () => {
     </div>
   );
 };
-
-export default WordleGame;
+  export default WordleGame;
