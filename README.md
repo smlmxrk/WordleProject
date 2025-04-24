@@ -3,5 +3,7 @@ where you're able to choose from different (relatively simple) games to play.
 
 Just a simple project to get me more familiar with web development & actually building a website.
 
+Currently, I'm working on expanding out the website, and eventually plan on connecting a backend to the frontend.
+
 ![image](https://github.com/user-attachments/assets/6b5a8885-8e5b-4958-a1da-c5cf51fbb908)
 
