@@ -231,14 +231,12 @@ const WordleGame = () => {
         <div className="header-buttons">
           <button
             className="help-button"
-            onClick={() => setShowHelp(true)}
-          >
+            onClick={() => setShowHelp(true)}>
             Need Help?
           </button>
           <button
             className="back-button"
-            onClick={handleBackToGames}
-          >
+            onClick={handleBackToGames}>
             Back to Games
           </button>
         </div>
@@ -247,17 +245,14 @@ const WordleGame = () => {
       {showHelp && (
         <div
           className="modal-overlay"
-          onClick={() => setShowHelp(false)}
-        >
+          onClick={() => setShowHelp(false)}>
           <div
             className="modal-content"
-            onClick={e => e.stopPropagation()}
-          >
+            onClick={e => e.stopPropagation()}>
             <RulesSVG className="rules-image"/>
             <button
               className="close-button"
-              onClick={() => setShowHelp(false)}
-            >
+              onClick={() => setShowHelp(false)}>
               Close
             </button>
           </div>
